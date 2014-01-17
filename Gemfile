@@ -5,11 +5,14 @@ gem 'sqlite3', :group => :development
 
 group :development do
   gem 'rspec-rails', '2.6.1'
+  gem 'ZenTest'
+  gem 'autotest-fsevent'
 end
 
 group :test do
   gem 'rspec-rails', '2.6.1'
   gem 'webrat', '0.7.1'
+  gem 'spork'
 end
 
 group :assets do
