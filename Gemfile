@@ -1,18 +1,21 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
-gem 'sqlite3', :group => :development
+gem 'pg', :group => :development
 
 group :development do
   gem 'rspec-rails', '2.6.1'
   gem 'ZenTest'
-  gem 'autotest-fsevent'
 end
 
 group :test do
   gem 'rspec-rails', '2.6.1'
   gem 'webrat', '0.7.1'
   gem 'spork'
+  gem 'autotest'
+  gem 'autotest-rails-pure'
+  gem 'autotest-fsevent'
+  gem 'autotest-growl'
 end
 
 group :assets do
