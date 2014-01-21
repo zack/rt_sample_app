@@ -12,7 +12,7 @@ describe PagesController do
       get 'home'
       response.should have_selector("title",
                                     :content =>
-      "Magic Ruby Castle of Gemstones and Unicorn Bones")
+      "Magic Ruby Castle of Gemstones and Unicorn Bones | Home")
     end
   end
 
@@ -25,7 +25,7 @@ describe PagesController do
       get 'contact'
       response.should have_selector("title",
                                     :content =>
-      "Contact the Magic Ruby Castle of Gemstones and Unicorn Bones")
+      "Magic Ruby Castle of Gemstones and Unicorn Bones | Contact")
     end
   end
 
@@ -38,7 +38,7 @@ describe PagesController do
       get 'about'
       response.should have_selector("title",
                                     :content =>
-      "About the Magic Ruby Castle of Gemstones and Unicorn Bones")
+      "Magic Ruby Castle of Gemstones and Unicorn Bones | About")
     end
   end
 end
