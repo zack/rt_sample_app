@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 gem 'sqlite3', :group => :development
+gem 'gravatar_image_tag', '1.0.0.pre2'
 
 group :production do
   gem 'pg'
@@ -21,6 +22,7 @@ group :test do
   gem 'autotest-rails-pure'
   gem 'autotest-fsevent'
   gem 'autotest-growl'
+  gem 'factory_girl_rails', '1.0'
 end
 
 group :assets do
