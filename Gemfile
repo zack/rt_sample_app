@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.13'
 gem 'sqlite3', :group => :development
 gem 'gravatar_image_tag', '1.0.0.pre2'
+gem 'will_paginate'
 
 group :production do
   gem 'pg'
@@ -12,6 +13,7 @@ group :development do
   gem 'rspec-rails', '2.6.1'
   gem 'ZenTest'
   gem 'annotate'
+  gem 'faker'
 end
 
 group :test do

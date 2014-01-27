@@ -4,6 +4,7 @@ describe UsersController do
   render_views
 
   describe "GET 'index'" do
+
     describe "for non-signed-in users" do
       it "should deny access" do
         get :index
@@ -20,6 +21,10 @@ describe UsersController do
         third = Factory(:user, :name => "Ben", :email => "another@example.net")
 
         @users = [@user, second, third]
+        30.times do
+          @users << Factory(:user, :name => Factory.next(:name),
+                                   :email => Factory.next(:email))
+        end
       end
 
       it "should be successful" do
@@ -39,9 +44,19 @@ describe UsersController do
 
       it "should have an element for each user" do
         get :index
-        @users.each do |user|
+        @users[0..2].each do |user|
           response.should have_selector("li", :content => user.name)
         end
+      end
+
+      it "should paginate users" do
+        get :index
+        response.should have_selector("div.pagination")
+        response.should have_selector("span.disabled", :content => "Previous")
+        response.should have_selector("a", :href => "/users?page=2",
+                                          :content => "2")
+        response.should have_selector("a", :href => "/users?page=2",
+                                           :content => "Next")
       end
     end
   end
@@ -79,6 +94,7 @@ describe UsersController do
   end
 
   describe "GET 'new'" do
+
     it "should be successful" do
       get 'new'
       response.should be_success
@@ -113,6 +129,7 @@ describe UsersController do
   end
 
   describe "GET 'edit'" do
+
     before do
       @user = Factory(:user)
       test_sign_in(@user)
@@ -137,7 +154,9 @@ describe UsersController do
   end
 
   describe "POST 'create'" do
+
     describe "failure" do
+
       before(:each) do
         @attr = { :name => "", :email => "", :password => "",
                   :password_confirmation => ""}
@@ -159,6 +178,7 @@ describe UsersController do
     end
 
     describe "success" do
+
       before do
         @attr = { :name => "New User", :email => "user@example.com",
                   :password => "foobar", :password_confirmation => "foobar" }
@@ -188,12 +208,14 @@ describe UsersController do
   end
 
   describe "PUT 'edit'" do
+
     before do
       @user = Factory(:user)
       test_sign_in(@user)
     end
 
     describe "failure" do
+
       before do
         @attr = { :email => "", :name => "", :password => "",
                   :password_confirmation => "" }
@@ -211,6 +233,7 @@ describe UsersController do
     end
 
     describe "succes" do
+
       before do
         @attr = { :name => "New Name", :email => "user@example.org",
                   :password => "foobar", :password_confirmation => "foobar" }
@@ -236,11 +259,13 @@ describe UsersController do
   end
 
   describe "authentication of edit/update pages" do
+
     before do
       @user = Factory(:user)
     end
 
     describe "for non-signed-in users" do
+
       it "should deny access to 'edit'" do
         get :edit, :id => @user
         response.should redirect_to(signin_path)
@@ -253,6 +278,7 @@ describe UsersController do
     end
 
     describe "for signed-in users" do
+
       before do
         wrong_user = Factory(:user, :email => "user@example.net")
         test_sign_in(wrong_user)
