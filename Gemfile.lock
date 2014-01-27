@@ -39,6 +39,7 @@ GEM
       sys-uname
     autotest-growl (0.2.16)
     autotest-rails-pure (4.1.2)
+    awesome_print (1.1.0)
     builder (3.0.4)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -152,11 +153,12 @@ DEPENDENCIES
   autotest-fsevent
   autotest-growl
   autotest-rails-pure
+  awesome_print
   coffee-rails (~> 3.2.1)
   factory_girl_rails (= 1.0)
   faker
   gravatar_image_tag (= 1.0.0.pre2)
-  jquery-rails
+  jquery-rails (= 3.0.4)
   pg
   rails (= 3.2.13)
   rspec-rails (= 2.6.1)

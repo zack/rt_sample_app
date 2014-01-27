@@ -47,7 +47,7 @@ describe SessionsController do
         controller.should be_signed_in
       end
 
-      it "should redirect to the user shower page" do
+      it "should redirect to the user show page" do
         post :create, :session => @attr
         response.should redirect_to(user_path(@user))
       end

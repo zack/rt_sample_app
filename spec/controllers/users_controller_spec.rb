@@ -23,7 +23,7 @@ describe UsersController do
         @users = [@user, second, third]
         30.times do
           @users << Factory(:user, :name => Factory.next(:name),
-                                   :email => Factory.next(:email))
+                            :email => Factory.next(:email))
         end
       end
 
@@ -34,12 +34,7 @@ describe UsersController do
 
       it "should have the right title" do
         get :index
-        response.should be_success
-      end
-
-      it "should have the right title" do
-        get :index
-        response.should be_success
+        response.should have_selector("title", :content => "All users")
       end
 
       it "should have an element for each user" do
@@ -54,9 +49,35 @@ describe UsersController do
         response.should have_selector("div.pagination")
         response.should have_selector("span.disabled", :content => "Previous")
         response.should have_selector("a", :href => "/users?page=2",
-                                          :content => "2")
+                                      :content => "2")
         response.should have_selector("a", :href => "/users?page=2",
-                                           :content => "Next")
+                                      :content => "Next")
+      end
+
+      it "should not show a delete link for each user" do
+        get :index
+        @users[0..2].each do |user|
+          response.should_not have_selector("a", :href => "/users/#{user[:id]}",
+                                            :'data-method' => "delete",
+                                              :content => "delete")
+        end
+      end
+
+      describe "for admin users" do
+
+        before do
+          admin = Factory(:user, :email => "admin@example.com", :admin => true)
+          test_sign_in(admin)
+        end
+
+        it "should show a delete link for each user" do
+          get :index
+          @users[0..2].each do |user|
+            response.should have_selector("a", :href => "/users/#{user[:id]}",
+                                          :'data-method' => "delete",
+                                            :content => "delete")
+          end
+        end
       end
     end
   end
@@ -118,13 +139,26 @@ describe UsersController do
     it "should have a password field" do
       get :new
       response.should
-        have_selector("input[name='user[password]'][type='password']")
+      have_selector("input[name='user[password]'][type='password']")
     end
 
     it "should have a password confirmation field" do
       get :new
       response.should
-        have_selector("input[name='user[password_confirmation]'][type='password']")
+      have_selector("input[name='user[password_confirmation]'][type='password']")
+    end
+
+    describe "for a signed-in user" do
+
+      before do
+        @user = Factory(:user)
+        test_sign_in(@user)
+      end
+
+      it "should redirect to root" do
+        get :new
+        response.should redirect_to(root_path)
+      end
     end
   end
 
@@ -149,7 +183,7 @@ describe UsersController do
       get :edit, :id => @user
       gravatar_url = "http://gravatar.com/emails"
       response.should have_selector("a", :href => gravatar_url,
-                                         :content => "change")
+                                    :content => "change")
     end
   end
 
@@ -159,7 +193,7 @@ describe UsersController do
 
       before(:each) do
         @attr = { :name => "", :email => "", :password => "",
-                  :password_confirmation => ""}
+          :password_confirmation => ""}
         post :create, :user => @attr
       end
 
@@ -181,7 +215,7 @@ describe UsersController do
 
       before do
         @attr = { :name => "New User", :email => "user@example.com",
-                  :password => "foobar", :password_confirmation => "foobar" }
+          :password => "foobar", :password_confirmation => "foobar" }
       end
 
       it "should create a user" do
@@ -218,7 +252,7 @@ describe UsersController do
 
       before do
         @attr = { :email => "", :name => "", :password => "",
-                  :password_confirmation => "" }
+          :password_confirmation => "" }
       end
 
       it "should render the 'edit' page" do
@@ -236,7 +270,7 @@ describe UsersController do
 
       before do
         @attr = { :name => "New Name", :email => "user@example.org",
-                  :password => "foobar", :password_confirmation => "foobar" }
+          :password => "foobar", :password_confirmation => "foobar" }
       end
 
       it "should change the user's attributes" do
@@ -324,6 +358,7 @@ describe UsersController do
       before do
         admin = Factory(:user, :email => "admin@example.com", :admin => true)
         test_sign_in(admin)
+        @admin = admin
       end
 
       it "should destroy the user" do
@@ -335,6 +370,12 @@ describe UsersController do
       it "should redirect to the users page" do
         delete :destroy, :id => @user
         response.should redirect_to(users_path)
+      end
+
+      it "should not let a user delete themself" do
+        delete :destroy, :id => @admin[:id]
+        response.should redirect_to(users_path)
+        flash[:notice].should =~ /can't delete yourself/i
       end
     end
   end

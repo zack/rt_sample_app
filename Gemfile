@@ -4,6 +4,8 @@ gem 'rails', '3.2.13'
 gem 'sqlite3', :group => :development
 gem 'gravatar_image_tag', '1.0.0.pre2'
 gem 'will_paginate'
+gem 'awesome_print'
+gem 'jquery-rails', '3.0.4'
 
 group :production do
   gem 'pg'
@@ -32,5 +34,3 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
 end
-
-gem 'jquery-rails'

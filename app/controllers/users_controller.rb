@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
-  before_filter :authenticate, :only => [:index, :edit, :update, :destroy]
-  before_filter :correct_user, :only => [:edit, :update]
-  before_filter :admin_user,   :only => :destroy
+  before_filter :authenticate,  :only => [:index, :edit, :update, :destroy]
+  before_filter :correct_user,  :only => [:edit, :update]
+  before_filter :not_signed_in, :only => [:create, :new]
+  before_filter :admin_user,    :only => :destroy
 
   def index
     @title = "All users"
@@ -48,22 +49,31 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "User destroyed."
+    user = User.find(params[:id])
+    user.destroy
+    flash[:success] = "#{user.name} destroyed."
     redirect_to users_path
   end
 
   private
-    def authenticate
-      deny_access unless signed_in?
-    end
+  def authenticate
+    deny_access unless signed_in?
+  end
 
-    def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_path) unless current_user?(@user)
-    end
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_path) unless current_user?(@user)
+  end
 
-    def admin_user
-      redirect_to(root_path) unless current_user.admin?
+  def not_signed_in
+    redirect_to(root_path) if signed_in?
+  end
+
+  def admin_user
+    redirect_to(root_path) unless current_user.admin?
+    if current_user[:id].to_i == params[:id].to_i && current_user.admin?
+      flash[:notice] = "Can't delete yourself."
+      redirect_to(users_path)
     end
+  end
 end
