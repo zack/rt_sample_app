@@ -1,3 +1,5 @@
 <h1> Entrance </h1>
 <p>Entrance? No entrance.</p>
-<%= link_to "Sign up?", signup_path, :class => "signup_button round" %>
+<% if current_user.nil? %>
+  <%= link_to "Sign up?", signup_path, :class => "signup_button round" %>
+<% end %>
