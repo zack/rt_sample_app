@@ -217,7 +217,7 @@ table.microposts tr td.micropost {
 table.microposts tr td.micropost span.timestamp {
   display: block;
   font-size: 85%;
-  color: #666;
+  color: #AAA;
   font-style: italic;
 }
 

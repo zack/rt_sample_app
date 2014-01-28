@@ -86,6 +86,10 @@ describe UsersController do
 
     before(:each) do
       @user = Factory(:user)
+
+      50.times do
+        @user.microposts.create!(:content => "Foobar!")
+      end
     end
 
     it "should be successful" do
@@ -119,6 +123,44 @@ describe UsersController do
       get :show, :id => @user
       response.should have_selector("span.content", :content => mp1.content)
       response.should have_selector("span.content", :content => mp2.content)
+    end
+
+    it "should paginate microposts" do
+      get :show, :id => @user
+      response.should have_selector("div.pagination")
+      response.should have_selector("span.disabled", :content => "Previous")
+      response.should have_selector("a", :href => "/users/#{@user.id}?page=2",
+                                    :content => "2")
+      response.should have_selector("a", :href => "/users/#{@user.id}?page=2",
+                                    :content => "Next")
+    end
+
+    it "should show the micropost count in the sidebar" do
+      @user.microposts.create!(:content => "foobar")
+      get :show, :id => @user
+      response.should have_selector("td", :content => "1");
+      # And add another one
+      @user.microposts.create!(:content => "baz")
+      get :show, :id => @user
+      response.should have_selector("td", :content => "2");
+    end
+
+    describe "authorized users" do
+
+      it "should see delete links for microposts" do
+        test_sign_in(@user)
+        get :show, :id => @user
+        response.should have_selector("a", :content => "delete")
+      end
+    end
+
+    describe "unaothurized users" do
+
+      it "should not see delete links for microposts" do
+        test_sign_in(Factory(:user, :email => "baduser@example.net"))
+        get :show, :id => @user
+        response.should_not have_selector("a", :content => "delete")
+      end
     end
   end
 
