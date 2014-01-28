@@ -1,8 +1,11 @@
 require 'spec_helper'
 
 describe "Users" do
+
   describe "signup" do
+
     describe "failure" do
+
       before do
         visit signup_path
         fill_in "Name",         :with => ""

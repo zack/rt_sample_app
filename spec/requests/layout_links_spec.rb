@@ -37,7 +37,7 @@ describe "LayoutLinks" do
     response.should have_selector('title', :content => "Contact")
     click_link "Home"
     response.should have_selector('title', :content => "Home")
-    click_link "Sign up?"
+    click_link "Sign Up Here"
     response.should have_selector('title', :content => "Sign Up")
   end
 
@@ -51,7 +51,7 @@ describe "LayoutLinks" do
     it "should have a sign up link" do
       visit root_path
       response.should have_selector("a", :href => signup_path,
-                                             :content => "Sign up?")
+                                         :content => "Sign Up Here")
     end
   end
 
@@ -76,7 +76,7 @@ describe "LayoutLinks" do
     it "should not have a sign up link" do
       visit root_path
       response.should_not have_selector("a", :href => signup_path,
-                                             :content => "Sign up?")
+                                             :content => "Sign Up Here")
     end
   end
 end

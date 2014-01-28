@@ -12,14 +12,13 @@ group :production do
 end
 
 group :development do
-  gem 'rspec-rails', '2.6.1'
+  gem 'rspec-rails', '2.14.0'
   gem 'annotate'
   gem 'faker'
   gem 'ZenTest'
 end
 
 group :test do
-  gem 'rspec-rails', '2.6.1'
   gem 'webrat', '0.7.1'
   gem 'spork'
   gem 'factory_girl_rails', '1.0'
