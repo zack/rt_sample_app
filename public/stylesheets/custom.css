@@ -3,7 +3,7 @@
 }
 
 body {
-  background: #700;
+  background: #F33;
 }
 
 header {
@@ -32,7 +32,7 @@ section {
   margin-top: 1em;
   font-size: 120%;
   padding: 20px;
-  background: #C00;
+  background: #FFF;
 }
 
 section h1 {
@@ -212,6 +212,10 @@ table.microposts tr td.micropost {
   border-top: 1px solid #ccc;
   vertical-align: top;
   padding-top: 10px;
+}
+
+table.microposts tr td.delete {
+  border-top: 1px solid #ccc;
 }
 
 table.microposts tr td.micropost span.timestamp {
