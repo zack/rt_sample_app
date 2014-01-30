@@ -15,9 +15,9 @@ describe User do
 
   before(:each) do
     @attr = { :name => "Example User",
-              :email => "user@example.com",
-              :password => "foobar",
-              :password_confirmation => "foobar"
+      :email => "user@example.com",
+      :password => "foobar",
+      :password_confirmation => "foobar"
     }
   end
 
@@ -261,6 +261,23 @@ describe User do
     it "should include the follower in the followers array" do
       @user.follow!(@followed)
       @followed.followers.should include(@user)
+    end
+  end
+
+  describe "relationship associations" do
+
+    before do
+      @followed = Factory(:user, :name => Factory.next(:name),
+                          :email => Factory.next(:email))
+      @follower = Factory(:user, :name => Factory.next(:name),
+                          :email => Factory.next(:email))
+      @follower.follow!(@followed)
+      @relationship = @follower.relationships.find_by_followed_id(@followed)
+    end
+
+    it "should destroy associated relationships" do
+      @follower.destroy
+      Relationship.find_by_id(@relationship.id).should be_nil
     end
   end
 end
