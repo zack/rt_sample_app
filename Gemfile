@@ -12,6 +12,7 @@ group :production do
 end
 
 group :development do
+  gem 'activerecord-import', ">= 0.2.0"
   gem 'rspec-rails', '2.14.0'
   gem 'annotate'
   gem 'faker'

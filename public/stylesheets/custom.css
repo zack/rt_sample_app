@@ -84,6 +84,12 @@ div .field, div .actions {
   list-style: square;
 }
 
+.search_form input {
+  border-size: 5px;
+  border-color: black;
+  width: 200px;
+}
+
 /* Links */
 
 a {

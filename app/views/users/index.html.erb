@@ -1,9 +1,13 @@
-<h1>All users</h1>
+<h1>Users</h1>
 
 <%= will_paginate %>
 
 <ul class="users">
-  <%= render @users %>
+  <% if @users.any? %>
+    <%= render @users %>
+  <% else %>
+    No users match that search!
+  <% end %>
 </ul>
 
 <%= will_paginate %>

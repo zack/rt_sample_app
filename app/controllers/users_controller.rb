@@ -1,12 +1,19 @@
+require 'will_paginate/array'
+
 class UsersController < ApplicationController
-  before_filter :authenticate,  :except => [:show, :new, :create]
+  before_filter :authenticate,  :except => [:new, :create]
   before_filter :correct_user,  :only => [:edit, :update]
   before_filter :not_signed_in, :only => [:create, :new]
   before_filter :admin_user,    :only => :destroy
 
   def index
     @title = "All users"
-    @users = User.paginate(:page => params[:page])
+    if params[:search]
+      @users = User.find(:all,
+                         :conditions => ['name LIKE ?', "%#{params[:search]}%"]).paginate(:page => params[:page])
+    else
+      @users = User.paginate(:page => params[:page])
+    end
   end
 
   def show

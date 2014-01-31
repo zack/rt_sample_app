@@ -15,6 +15,7 @@ SampleApp::Application.routes.draw do
   match '/signout', :to => 'sessions#destroy'
 
   match '/contact', :to => 'pages#contact'
+  match '/search', :to => 'pages#search'
   match '/about', :to => 'pages#about'
   match '/help', :to => 'pages#help'
 
