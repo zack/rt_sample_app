@@ -6,13 +6,13 @@ gem 'gravatar_image_tag', '1.0.0.pre2'
 gem 'will_paginate'
 gem 'awesome_print'
 gem 'jquery-rails', '3.0.4'
+gem 'activerecord-import', ">= 0.2.0"
 
 group :production do
   gem 'pg'
 end
 
 group :development do
-  gem 'activerecord-import', ">= 0.2.0"
   gem 'rspec-rails', '2.14.0'
   gem 'annotate'
   gem 'faker'
