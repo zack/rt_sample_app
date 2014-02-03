@@ -1,0 +1,15 @@
+<h1>Microposts</h1>
+
+<%= will_paginate %>
+
+<table class="microposts">
+  <ul class="microposts">
+    <% if @microposts.any? %>
+      <%= render @microposts %>
+    <% else %>
+      No microposts match that search!
+    <% end %>
+  </ul>
+</table>
+
+<%= will_paginate %>

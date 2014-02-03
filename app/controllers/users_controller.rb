@@ -10,7 +10,9 @@ class UsersController < ApplicationController
     @title = "All users"
     if params[:search]
       @users = User.find(:all,
-                         :conditions => ['name LIKE ?', "%#{params[:search]}%"]).paginate(:page => params[:page])
+                         :conditions => ['name LIKE ?',
+                         "%#{params[:search]}%"])
+                         .paginate(:page => params[:page])
     else
       @users = User.paginate(:page => params[:page])
     end

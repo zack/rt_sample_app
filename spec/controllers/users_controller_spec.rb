@@ -90,6 +90,8 @@ describe UsersController do
       50.times do
         @user.microposts.create!(:content => "Foobar!")
       end
+
+      test_sign_in(@user)
     end
 
     it "should be successful" do

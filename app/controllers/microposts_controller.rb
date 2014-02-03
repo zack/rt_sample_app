@@ -2,6 +2,23 @@ class MicropostsController < ApplicationController
   before_filter :authenticate, :only => [:create, :destroy]
   before_filter :authorized_user, :only => :destroy
 
+  def index
+    @title = "All microposts"
+    if params[:search]
+      @microposts = Micropost.find(:all,
+                         :conditions => ['content LIKE ?',
+                         "%#{params[:search]}%"])
+                         .paginate(:page => params[:page])
+    else
+      @microposts = Micropost.paginate(:page => params[:page])
+    end
+  end
+
+  def show
+    @user = Micropost.find(params[:id]).user
+    @micropost = Micropost.find(params[:id])
+  end
+
   def create
     @micropost = current_user.microposts.build(params[:micropost])
     if @micropost.save

@@ -1,0 +1,9 @@
+<h1>
+  <%= gravatar_for @user %>
+  <%= @user.name %>
+</h1>
+<table class="micropost">
+  <ul class="microposts">
+    <%= render @micropost %>
+  </ul>
+</table>

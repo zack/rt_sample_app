@@ -35,11 +35,7 @@ class User < ActiveRecord::Base
   validates :password, :presence => true,
                        :confirmation => true,
                        :length => { :within => 6..40 }
-:c
   before_save :encrypt_password
-
-  # Set pagination value
-  self.per_page = 100
 
   # Return true if the user's password matches the submitted password.
   def has_password? (submitted_password)

@@ -1,15 +1,14 @@
 <tr>
   <td class = "micropost" >
+    <% if controller.action_name == "index" %>
+      <%= link_to gravatar_for(micropost.user), micropost.user %>
+    <% end %>
     <span class = "content"><%= micropost.content %></span><br />
-    <span class = "timestamp">
-      <i>Posted <%= time_ago_in_words(micropost.created_at) %> ago.</i>
-    </span>
+    <%= render 'shared/timestamp', :micropost => micropost %>
   </td>
-  <% if current_user?(micropost.user) %>
-    <td class = "delete">
-      <%= link_to "delete", micropost, :method => :delete,
-                                       :confirm => "You sure?",
-                                       :title => micropost.content %>
+  <td class = "delete">
+    <% if current_user?(micropost.user) %>
+      <%= link_to "delete", micropost, :method => :delete, :confirm => "You sure?", :title => micropost.content %>
     </td>
   <% end %>
 </tr>

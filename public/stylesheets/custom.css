@@ -231,6 +231,13 @@ table.microposts tr td.micropost span.timestamp {
   font-style: italic;
 }
 
+table.micropost tr td.micropost span.timestamp {
+  display: block;
+  font-size: 85%;
+  color: #AAA;
+  font-style: italic;
+}
+
 div.user_info img {
   padding-right: 0.1em;
 }
