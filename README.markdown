@@ -1,3 +1,3 @@
-# Ruby on Rails Tutorial : Sample Application
+# Ruby on Rails Tutorial : Sample App
 
-This is the sample application for *railstutorial.org*.
+Sample app from railstutorial. Contains a little but of customization at the end.
